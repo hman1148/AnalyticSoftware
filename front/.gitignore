@@ -1,0 +1,182 @@
+# Node modules
+node_modules/
+
+# Nx generated files
+dist/
+tmp/
+nx-cache/
+.cache/
+.project/
+
+# Angular specific
+.angular/
+.angular-build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Miscellaneous
+*.log
+*.gz
+*.zip
+
+# Optional eslint cache
+.eslintcache
+
+# Compiled output
+*.js
+*.jsx
+*.js.map
+*.jsx.map
+*.d.ts
+
+# Compiled Angular files
+*.ngfactory.ts
+*.ngsummary.json
+
+# Mac system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Docker
+**/[Dd]ockerfile*
+**/[Dd]ocker-compose*
+.dockerignore
+docker-compose.override.yml
+
+# Nx specific
+.husky/_/
+.husky/_/husky.sh
+.gitignore.lock
+nx-reporter/ 
+tools/generators/
+tools/schematics/
+libs/common/src/environments/
+libs/common/src/assets/
+
+# Ignore JetBrains Rider
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Local History for JetBrains IDEs
+.idea/.idea/
+
+# Rider project files
+*.sln.iml
+
+# Ignore ReSharper files
+_ReSharper*/
+*.[rR]e[Ss]harper
+# User-specific ReSharper settings
+*.DotSettings.user
+
+# Ignore Visual Studio Code files
+.vscode/
+
+# Ignore Visual Studio files
+.vscode/
+.vscode/**
+
+# Built application files
+*.dll
+*.exe
+*.pdb
+*.dbmdl
+*.log
+*.vspscc
+*.vssscc
+*.aps
+*.pch
+*.obj
+*.out
+*.pidb
+*.mdf
+*.ldf
+*.ndx
+*.ds_store
+*.swp
+*.lock
+*.sln.docstates
+*.userosscache
