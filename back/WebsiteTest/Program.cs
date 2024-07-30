@@ -8,6 +8,10 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+string connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION") ?? "";
+string dataBaseName = "TruckingDatabase";
+
 // Add logging
 builder.Logging.AddConsole();
 
