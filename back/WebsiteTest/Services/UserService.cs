@@ -2,6 +2,7 @@
 using AnalyticSoftware.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Net.WebSockets;
 
 namespace AnalyticSoftware.Services
 {
@@ -43,6 +44,12 @@ namespace AnalyticSoftware.Services
                 S3Bucket = s3Bucket
             };
             await _users.InsertOneAsync(newUser);
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _users.Find(user => user.Email == email).FirstOrDefaultAsync();
+            return user;
         }
     }
 }
