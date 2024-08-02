@@ -10,16 +10,16 @@ namespace AnalyticSoftware.Services
     {
 
         private readonly IMongoCollection<User> _users;
+        private readonly SecurityService _securityService;
 
-        public UserService(DatabaseContext dbContext)
+        public UserService(DatabaseContext dbContext, SecurityService securityService)
         {
             _users = dbContext.Users;
+            _securityService = securityService;
         }
 
-        public async Task RegisterUser(string superUserId, string email, string password, string role, string s3Bucket)
+        public async Task RegisterUser(User superUser, string email, string password, string role, string s3Bucket)
         {
-            var superUser = await _users.Find(user => user.Id == new ObjectId(superUserId) && user.Role == "superuser").FirstOrDefaultAsync();
-
             if (superUser == null)
             {
                 // Make this Json response in the future
@@ -46,9 +46,35 @@ namespace AnalyticSoftware.Services
             await _users.InsertOneAsync(newUser);
         }
 
+        public async Task<User> CreateSuperUserAsync(string email, string password)
+        {
+            var existingUser = await _users.Find(user => user.Email == email).FirstOrDefaultAsync();
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException("Super user already exists.");
+            }
+
+            var passwordHash = _securityService.HashPassword(password);
+            var superUser = new User
+            {
+                Email = email,
+                Role = "SuperUser",
+                PasswordHash = passwordHash
+            };
+
+            await _users.InsertOneAsync(superUser);
+            return superUser;
+        }
+
         public async Task<User> GetUserByEmail(string email)
         {
             var user = await _users.Find(user => user.Email == email).FirstOrDefaultAsync();
+            return user;
+        }
+
+        public async Task<User> GetUserById(ObjectId id)
+        {
+            var user = await _users.Find(user => user.Id.Equals(id)).FirstOrDefaultAsync(); ;
             return user;
         }
     }
