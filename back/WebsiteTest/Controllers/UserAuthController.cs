@@ -88,11 +88,11 @@ namespace AnalyticSoftware.Controllers
 
             try
             {
-                await _userService.RegisterUser(superUser, email, password, role, s3Bucket);
+                User newUser = await _userService.RegisterUser(superUser, email, password, role, s3Bucket);
                 ctx.Response.StatusCode = 200;
-                DataResponse<string> dataResponse = new DataResponse<string>
+                DataResponse<User> dataResponse = new DataResponse<User>
                 {
-                    Data = string.Empty,
+                    Data = newUser,
                     Message = "Successfully Registered User",
                     Success = true
                 };
