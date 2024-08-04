@@ -15,15 +15,6 @@
                 padding-left: 2rem;
             }
 
-            .layout-sidebar {
-                transform: translateX(-100%);
-                left: 0;
-                top: 0;
-                height: 100vh;
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-
             &.layout-overlay-active {
                 .layout-sidebar {
                     transform: translateX(0);
@@ -32,15 +23,7 @@
         }
 
         &.layout-static {
-            .layout-main-container {
-                margin-left: 300px;
-            }
-
             &.layout-static-inactive {
-                .layout-sidebar {
-                    transform: translateX(-100%);
-                    left: 0;
-                }
 
                 .layout-main-container {
                     margin-left: 0;

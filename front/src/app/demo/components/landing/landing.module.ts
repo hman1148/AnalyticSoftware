@@ -7,6 +7,7 @@ import { DividerModule } from 'primeng/divider';
 import { ChartModule } from 'primeng/chart';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
@@ -16,8 +17,11 @@ import { ButtonModule } from 'primeng/button';
         StyleClassModule,
         ChartModule,
         PanelModule,
-        ButtonModule
+        ButtonModule,
+        RouterModule.forChild([
+            {path: '', component: LandingComponent}
+        ])
     ],
-    declarations: [LandingComponent]
+    declarations: [LandingComponent],
 })
 export class LandingModule { }
