@@ -63,7 +63,10 @@ foreach (var endpointDefinitionType in endpointDefinitionTypes)
 }
 
 var app = builder.Build();
+// MiddleWare
 app.UseMiddleware<JwtMiddleware>();
+app.UseMiddleware<UserContextMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

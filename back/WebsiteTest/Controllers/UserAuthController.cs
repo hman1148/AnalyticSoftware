@@ -1,6 +1,8 @@
 ﻿using AnalyticSoftware.Models;
 using AnalyticSoftware.Services;
 using Framework;
+using MongoDB.Bson;
+using System.Security.Claims;
 
 namespace AnalyticSoftware.Controllers
 {
@@ -55,6 +57,30 @@ namespace AnalyticSoftware.Controllers
                 return;
             }
 
+            // I would test this section of the code to makesure we are appending the jWT to our fetchRequests
+            var authorizationHeader = ctx.Request.Headers["Authorization"].ToString();
+            var token = authorizationHeader?.Replace("Bearer ", "");
+
+            // I would heavily test this section. I think ClaimIds might be coming as strings rather than ObjectIds in Mongo
+            var claimsPrinciple = _securityService.ValidateToken(token);
+            var userIdClaim = claimsPrinciple?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            ObjectId superUserId = ObjectId.Parse(userIdClaim);
+            
+            var superUser = await _userService.GetUserById(superUserId);
+
+            if (superUser == null)
+            {
+                ctx.Response.StatusCode = 400;
+                DataResponse<string> dataResponse = new DataResponse<string>
+                {
+                    Data = string.Empty,
+                    Message = "Must be a SuperUser to Add Additional Users",
+                    Success = false
+                };
+                await ctx.Response.WriteAsJsonAsync(dataResponse);
+                return;
+            }
+
             var email = registerRequest.Email;
             var password = registerRequest.Password;
             var role = registerRequest.Role;
@@ -62,10 +88,11 @@ namespace AnalyticSoftware.Controllers
 
             try
             {
+                User newUser = await _userService.RegisterUser(superUser, email, password, role, s3Bucket);
                 ctx.Response.StatusCode = 200;
-                DataResponse<string> dataResponse = new DataResponse<string>
+                DataResponse<User> dataResponse = new DataResponse<User>
                 {
-                    Data = string.Empty,
+                    Data = newUser,
                     Message = "Successfully Registered User",
                     Success = true
                 };
@@ -105,16 +132,32 @@ namespace AnalyticSoftware.Controllers
             var password = loginRequest.Password;
 
             var user = await _userService.GetUserByEmail(email);
-            if (user == null || _securityService.VerifyPassword(password, user.PasswordHash))
+
+            if (user == null)
             {
                 ctx.Response.StatusCode = 400;
-                DataResponse<string> inValidDataResponse = new DataResponse<string>
+                DataResponse<string> invalidEmailResponse = new DataResponse<string>
                 {
                     Data = string.Empty,
-                    Message = "Failed to Validate User Password",
+                    Message = "Failed to validate User Email",
                     Success = false
                 };
-                await ctx.Response.WriteAsJsonAsync(inValidDataResponse);
+                await ctx.Response.WriteAsJsonAsync(invalidEmailResponse);
+                return;
+            }
+
+            bool isValidPassword = _securityService.VerifyPassword(password, user.PasswordHash);
+
+            if (!isValidPassword)
+            {
+                ctx.Response.StatusCode = 400;
+                DataResponse<string> invalidPasswordResponse = new DataResponse<string>
+                {
+                    Data = string.Empty,
+                    Message = "Failed to validate User Password",
+                    Success = false
+                };
+                await ctx.Response.WriteAsJsonAsync(invalidPasswordResponse);
                 return;
             }
             var token = _securityService.GenerateToken(user);
@@ -122,7 +165,7 @@ namespace AnalyticSoftware.Controllers
             DataResponse<string> dataResponse = new DataResponse<string>
             {
                 Data = token,
-                Message = "Generated User Token",
+                Message = "User LoggedIn!",
                 Success = true
             };
             await ctx.Response.WriteAsJsonAsync(dataResponse);
