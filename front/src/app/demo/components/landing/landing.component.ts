@@ -9,5 +9,10 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
 export class LandingComponent {
 
     constructor(public layoutService: LayoutService, public router: Router) { }
+
+    linkToLogin(): void {
+        console.log("here")
+        this.router.navigate(['login']);
+    }
     
 }

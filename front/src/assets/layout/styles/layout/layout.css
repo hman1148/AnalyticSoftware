@@ -331,11 +331,6 @@ a {
   background: var(--primary-400);
 }
 
-.layout-config-sidebar.p-sidebar .p-sidebar-content {
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
-
 .layout-main-container {
   display: flex;
   flex-direction: column;
@@ -370,21 +365,7 @@ a {
     margin-left: 0;
     padding-left: 2rem;
   }
-  .layout-wrapper.layout-overlay .layout-sidebar {
-    transform: translateX(-100%);
-    left: 0;
-    top: 0;
-    height: 100vh;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .layout-wrapper.layout-overlay.layout-overlay-active .layout-sidebar {
-    transform: translateX(0);
-  }
-  .layout-wrapper.layout-static.layout-static-inactive .layout-sidebar {
-    transform: translateX(-100%);
-    left: 0;
-  }
+
   .layout-wrapper.layout-static.layout-static-inactive .layout-main-container {
     margin-left: 0;
     padding-left: 2rem;
@@ -401,14 +382,6 @@ a {
     margin-left: 0;
     padding-left: 2rem;
   }
-  .layout-wrapper .layout-sidebar {
-    transform: translateX(-100%);
-    left: 0;
-    top: 0;
-    height: 100vh;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
   .layout-wrapper .layout-mask {
     display: none;
     position: fixed;
@@ -419,9 +392,7 @@ a {
     height: 100%;
     background-color: var(--maskbg);
   }
-  .layout-wrapper.layout-mobile-active .layout-sidebar {
-    transform: translateX(0);
-  }
+
   .layout-wrapper.layout-mobile-active .layout-mask {
     display: block;
     animation: fadein 0.2s;
