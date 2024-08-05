@@ -1,19 +1,18 @@
 using AnalyticSoftware.Database;
 using AnalyticSoftware.Services;
 using Framework;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 using System.Reflection;
-using System.IdentityModel.Tokens;
 using AnalyticSoftware.MiddleWare;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Amazon;
 
 var builder = WebApplication.CreateBuilder(args);
+
+string accessKey = Environment.GetEnvironmentVariable("S3_ACCESS_KEY") ?? "";
+string secretKey = Environment.GetEnvironmentVariable("S3_SECRET_KEY") ?? "";
+string region = RegionEndpoint.USEast2.SystemName;
 
 DotNetEnv.Env.Load();
 
@@ -49,7 +48,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddSingleton(mongoDBSettings);
 builder.Services.AddSingleton<DatabaseContext>();
 builder.Services.AddSingleton<UserService>();
-builder.Services.AddSingleton<S3Service>(sp => new S3Service("access_key", "secret_key", "region"));
+builder.Services.AddSingleton<S3Service>(sp => new S3Service(accessKey, secretKey, region));
 builder.Services.AddSingleton<SecurityService>();
 
 var endpointDefinitionTypes = Assembly.GetExecutingAssembly()
@@ -69,6 +68,7 @@ app.UseMiddleware<UserContextMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.UseRouting();
 

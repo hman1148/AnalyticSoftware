@@ -18,7 +18,7 @@ namespace AnalyticSoftware.Services
             _securityService = securityService;
         }
 
-        public async Task<User> RegisterUser(User superUser, string email, string password, string role, string s3Bucket)
+        public async Task<User> RegisterUser(User superUser, string email, string password, string role, string companyName)
         {
             if (superUser == null)
             {
@@ -41,7 +41,7 @@ namespace AnalyticSoftware.Services
                 Email = email,
                 PasswordHash = passwordHash,
                 Role = role,
-                S3Bucket = s3Bucket
+                CompanyName = companyName
             };
             await _users.InsertOneAsync(newUser);
 
