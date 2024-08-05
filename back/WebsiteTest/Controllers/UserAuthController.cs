@@ -84,11 +84,11 @@ namespace AnalyticSoftware.Controllers
             var email = registerRequest.Email;
             var password = registerRequest.Password;
             var role = registerRequest.Role;
-            var s3Bucket = registerRequest.S3Bucket;
+            var companyName = registerRequest.CompanyName;
 
             try
             {
-                User newUser = await _userService.RegisterUser(superUser, email, password, role, s3Bucket);
+                User newUser = await _userService.RegisterUser(superUser, email, password, role, companyName);
                 ctx.Response.StatusCode = 200;
                 DataResponse<User> dataResponse = new DataResponse<User>
                 {
