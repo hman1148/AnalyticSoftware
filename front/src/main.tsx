@@ -1,9 +1,9 @@
 import './index.css'
-import 'primereact/resources/themes/saga-blue/theme.css';  // Choose a theme
+import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-
+import './App.css'
 
 // https://github.com/ruvictor/map-app-directions/blob/master/app.js look at this repo for mapping
 import React from 'react'
