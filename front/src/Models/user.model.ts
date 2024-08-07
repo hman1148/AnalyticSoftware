@@ -3,4 +3,5 @@ export type User = {
     password: string,
     role: string,
     companyName: string,
+    createdDate: Date
 }

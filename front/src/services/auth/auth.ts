@@ -21,7 +21,8 @@ export const CreateUser = async (email: string, password: string, role: string, 
         email: email,
         password: password,
         companyName: companyName,
-        role: role
+        role: role,
+        createdDate: date
     };
 
     const response: DataResponse<User> = await axios({
@@ -34,10 +35,14 @@ export const CreateUser = async (email: string, password: string, role: string, 
         data: newUser
     });
 
-    if (response.item) {
-        
+    if (response.item && response.success == true) {
+        return response.item;
+    } else {
+        const failedCreateResponse: DataResponse<string> = {
+            item: "",
+            message: "Failed to create user",
+            success: false
+        };
+        return failedCreateResponse;
     }
-
-
-
 }
